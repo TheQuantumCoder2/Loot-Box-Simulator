@@ -1,0 +1,31 @@
+Juego 6
+ Juego: “Loot box simulator”
+Mito
+“Si compras muchas cajas, seguro obtendrás el objeto legendario.”
+Juego
+Un sistema de Cajas animadas que se abren tipo premio raro. Parecido a los juegos con Gacha de 
+cartas.
+El jugador intenta conseguir un objeto con LEGENDARIO el cual tiene:
+5% de probabilidad de aparecer tras cada tiro.
+El usuario debe comprar mazos de cartas de 10 cartas cada mazo, puede decidir si comprar 1 mazo o 10 
+mazos, cada mazo cuesta 10 fichas y si compra 10 mazos le cuesta 90 fichas.
+Visual:
+• barra de progreso del numero de cartas que debe tener los mazos es decir cuantos ya salieron del 
+mazo o mazos comprados
+• contador de intentos, es decir cuantos mazos ha comprado el usuario y cuantas cartas ya le 
+salieron.
+• animación de recompensa al conseguir la carta legendaria.
+• Las posibles cartas que pueden salir son común, raro, épico y legendario.
+• Común 80% de probabilidad 
+• Raro 50% de probabilidad
+• Épico 20% de probabilidad
+• Legendario 5% de probabilidad
+• El usuario dispone de 1000 fichas para conseguir la carta legendaria.
+Después de muchos intentos el juego muestra que no está garantizado obtener una carta legendaria.
+Conceptos:
+• probabilidad repetida
+• frecuencia esperada
+Demuestra lo difícil que es obtener el legendario.
+Conceptos:
+• probabilidad acumulada
+• eventos independiente

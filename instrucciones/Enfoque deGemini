@@ -1,0 +1,33 @@
+Análisis de Probabilidades
+  El mayor desafío para desmentir el mito es la probabilidad del 5% para el Legendario. Matemáticamente, con 1000 fichas (que 
+  permiten abrir unas 1100 cartas si se compran en packs de 10), la probabilidad de no obtener un legendario es extremadamente
+  baja (casi 0).
+
+  Para que el juego realmente demuestre que "no está garantizado", interpretaré las probabilidades de la siguiente manera:    
+   1. Legendario (5%): 1 entre 20.
+   2. Épico (20%): 1 entre 5.
+   3. Raro (50%): 1 entre 2.
+   4. Común (80%): Como los porcentajes suman más de 100, utilizaré un sistema de pesos (Weights). Esto mantendrá la
+      dificultad relativa:
+       * Legendario: 5 unidades de peso (~3.2%)
+       * Épico: 20 unidades (~12.9%)
+       * Raro: 50 unidades (~32.3%)
+       * Común: 80 unidades (~51.6%)
+       * Total: 155 unidades.
+      Esto hace que el Legendario sea significativamente más difícil de obtener, reforzando el mensaje pedagógico.
+  Propuesta Tecnológica
+  Para un despliegue rápido y elegante en GitHub Pages, lo mejor es usar:
+   * HTML5 / CSS3 (Moderno): Usaremos un diseño tipo "Dark Mode Premium" con efectos de Glassmorphism (cristal esmerilado)    
+     para que se vea moderno y "cómodo a la vista".
+   * Vanilla JavaScript: Sin librerías pesadas para asegurar que cargue instantáneamente. Manejaremos la lógica de apertura y 
+     los contadores.
+   * CSS Animations: Para el efecto de "sacudir" la caja antes de abrirse y el brillo dorado cuando sale una legendaria.      
+
+  Diseño Visual
+   * Paleta de colores: Fondos oscuros (Azul noche/Negro mate) con acentos vibrantes según la rareza (Dorado, Púrpura, Azul   
+     cian).
+   * Interfaz:
+       * Header: Barra de progreso de cartas y contador de fichas (1000).
+       * Centro: Una "Caja de Botín" animada.
+       * Botones: "Abrir 1 Mazo (10 fichas)" y "Abrir 10 Mazos (90 fichas)".
+       * Historial: Una cuadrícula donde van apareciendo las cartas obtenidas.
