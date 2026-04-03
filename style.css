@@ -34,7 +34,7 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1100px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -42,14 +42,20 @@ body {
 }
 
 header {
-    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
 }
 
 h1 {
     font-size: 2.5rem;
     font-weight: 800;
     letter-spacing: -0.025em;
-    margin-bottom: 0.5rem;
     background: linear-gradient(to right, #60a5fa, #c084fc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -58,6 +64,190 @@ h1 {
 .subtitle {
     color: var(--text-secondary);
     font-size: 1.1rem;
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    width: auto;
+    border-radius: 0.75rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.main-content-wrapper {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+/* Sidebar Probabilidades */
+.rarities-sidebar {
+    background: var(--panel-bg);
+    backdrop-filter: blur(8px);
+    border: var(--glass-border);
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+    box-shadow: var(--card-shadow);
+    position: sticky;
+    top: 2rem;
+}
+
+.rarities-sidebar h3 {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.rarity-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.rarity-info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 0.75rem;
+}
+
+.info-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.legendary .info-dot { background: var(--legendary); box-shadow: 0 0 10px var(--legendary); }
+.epic .info-dot { background: var(--epic); }
+.rare .info-dot { background: var(--rare); }
+.common .info-dot { background: var(--common); }
+
+.info-name {
+    flex: 1;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.info-chance {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.rarity-note {
+    margin-top: 1.5rem;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    opacity: 0.6;
+    font-style: italic;
+}
+
+/* Game Settings */
+.game-settings {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.setting-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.setting-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.speed-btns {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-speed {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.btn-speed.active {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+/* Toggle Switch */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+}
+
+.toggle-container input {
+    display: none;
+}
+
+.toggle-slider {
+    width: 40px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    position: relative;
+    transition: 0.3s;
+}
+
+.toggle-slider::before {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: white;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    transition: 0.3s;
+}
+
+.toggle-container input:checked + .toggle-slider {
+    background: var(--accent-color);
+}
+
+.toggle-container input:checked + .toggle-slider::before {
+    transform: translateX(20px);
+}
+
+.toggle-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
 }
 
 /* Stats Panel */
@@ -70,7 +260,6 @@ h1 {
 .stat-card {
     background: var(--panel-bg);
     backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     border: var(--glass-border);
     padding: 1.5rem;
     border-radius: 1rem;
@@ -134,7 +323,7 @@ h1 {
     color: var(--text-secondary);
 }
 
-/* Loot Box 3D - Placeholder simplified */
+/* Loot Box 3D */
 .loot-box-container {
     height: 250px;
     display: flex;
@@ -150,7 +339,6 @@ h1 {
     position: relative;
     transform-style: preserve-3d;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: default;
 }
 
 .loot-box.shaking {
@@ -385,6 +573,15 @@ h1 {
 
 .hidden {
     display: none !important;
+}
+
+@media (max-width: 800px) {
+    .main-content-wrapper {
+        grid-template-columns: 1fr;
+    }
+    .rarities-sidebar {
+        position: static;
+    }
 }
 
 @media (max-width: 600px) {

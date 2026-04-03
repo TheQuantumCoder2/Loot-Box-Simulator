@@ -10,7 +10,10 @@
 <body>
     <div class="container">
         <header>
-            <h1>Loot Box Simulator</h1>
+            <div class="header-top">
+                <h1>Loot Box Simulator</h1>
+                <button id="btn-reset-main" class="btn btn-danger">Reiniciar Todo</button>
+            </div>
             <p class="subtitle">"Si compras muchas, ¿seguro ganas?" — Vamos a comprobarlo.</p>
         </header>
 
@@ -29,42 +32,91 @@
             </div>
         </section>
 
-        <main class="game-area">
-            <div class="progress-container">
-                <div class="progress-bar-bg">
-                    <div id="progress-bar-fill" class="progress-bar-fill"></div>
-                </div>
-                <span id="progress-text">Esperando apertura...</span>
-            </div>
-
-            <div id="loot-box-container" class="loot-box-container">
-                <div id="loot-box" class="loot-box">
-                    <div class="box-face box-front">?</div>
-                    <div class="box-face box-back"></div>
-                    <div class="box-face box-top"></div>
-                    <div class="box-face box-bottom"></div>
-                    <div class="box-face box-left"></div>
-                    <div class="box-face box-right"></div>
-                </div>
-                <div id="card-reveal" class="card-reveal hidden">
-                    <div class="card-inner">
-                        <div class="card-rarity" id="card-rarity-text">RARIDAD</div>
-                        <div class="card-name" id="card-name-text">Nombre de la Carta</div>
+        <div class="main-content-wrapper">
+            <aside class="rarities-sidebar">
+                <h3>Probabilidades</h3>
+                <div class="rarity-info-list">
+                    <div class="rarity-info-item legendary">
+                        <span class="info-dot"></span>
+                        <span class="info-name">Legendario</span>
+                        <span class="info-chance">3.2%</span>
+                    </div>
+                    <div class="rarity-info-item epic">
+                        <span class="info-dot"></span>
+                        <span class="info-name">Épico</span>
+                        <span class="info-chance">12.9%</span>
+                    </div>
+                    <div class="rarity-info-item rare">
+                        <span class="info-dot"></span>
+                        <span class="info-name">Raro</span>
+                        <span class="info-chance">32.3%</span>
+                    </div>
+                    <div class="rarity-info-item common">
+                        <span class="info-dot"></span>
+                        <span class="info-name">Común</span>
+                        <span class="info-chance">51.6%</span>
                     </div>
                 </div>
-            </div>
+                <div class="rarity-note">
+                    *Basado en pesos: 5, 20, 50, 80.
+                </div>
+            </aside>
 
-            <div class="controls">
-                <button id="btn-buy-1" class="btn btn-primary">
-                    <span class="btn-title">Abrir 1 Mazo</span>
-                    <span class="btn-cost">10 Fichas</span>
-                </button>
-                <button id="btn-buy-10" class="btn btn-secondary">
-                    <span class="btn-title">Abrir 10 Mazos</span>
-                    <span class="btn-cost">90 Fichas</span>
-                </button>
-            </div>
-        </main>
+            <main class="game-area">
+                <div class="game-settings">
+                    <div class="setting-group">
+                        <span class="setting-label">Velocidad:</span>
+                        <div class="speed-btns">
+                            <button class="btn-speed active" data-speed="1">x1</button>
+                            <button class="btn-speed" data-speed="2">x2</button>
+                            <button class="btn-speed" data-speed="3">x3</button>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <label class="toggle-container">
+                            <input type="checkbox" id="chk-skip">
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Saltar animaciones</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar-bg">
+                        <div id="progress-bar-fill" class="progress-bar-fill"></div>
+                    </div>
+                    <span id="progress-text">Esperando apertura...</span>
+                </div>
+
+                <div id="loot-box-container" class="loot-box-container">
+                    <div id="loot-box" class="loot-box">
+                        <div class="box-face box-front">?</div>
+                        <div class="box-face box-back"></div>
+                        <div class="box-face box-top"></div>
+                        <div class="box-face box-bottom"></div>
+                        <div class="box-face box-left"></div>
+                        <div class="box-face box-right"></div>
+                    </div>
+                    <div id="card-reveal" class="card-reveal hidden">
+                        <div class="card-inner">
+                            <div class="card-rarity" id="card-rarity-text">RARIDAD</div>
+                            <div class="card-name" id="card-name-text">Nombre de la Carta</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button id="btn-buy-1" class="btn btn-primary">
+                        <span class="btn-title">Abrir 1 Mazo</span>
+                        <span class="btn-cost">10 Fichas</span>
+                    </button>
+                    <button id="btn-buy-10" class="btn btn-secondary">
+                        <span class="btn-title">Abrir 10 Mazos</span>
+                        <span class="btn-cost">90 Fichas</span>
+                    </button>
+                </div>
+            </main>
+        </div>
 
         <section class="history-panel">
             <h3>Historial Reciente</h3>

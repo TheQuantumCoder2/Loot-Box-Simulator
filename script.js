@@ -18,7 +18,9 @@ let state = {
     packsBought: 0,
     cardsRevealed: 0,
     hasLegendary: false,
-    isOpening: false
+    isOpening: false,
+    speed: 1,
+    skipAnimation: false
 };
 
 // Elementos del DOM
@@ -39,6 +41,11 @@ const modalTitle = document.getElementById('modal-title');
 const modalMessage = document.getElementById('modal-message');
 const btnRestart = document.getElementById('btn-restart');
 
+// Elementos del DOM adicionales
+const btnSpeed = document.querySelectorAll('.btn-speed');
+const chkSkip = document.getElementById('chk-skip');
+const btnResetMain = document.getElementById('btn-reset-main');
+
 // Funciones Principales
 function updateUI() {
     chipsEl.textContent = state.chips;
@@ -47,6 +54,7 @@ function updateUI() {
     
     btnBuy1.disabled = state.chips < 10 || state.isOpening;
     btnBuy10.disabled = state.chips < 90 || state.isOpening;
+    btnResetMain.disabled = state.isOpening;
 }
 
 function getRandomCard() {
@@ -74,37 +82,47 @@ async function openPackSequence(numPacks) {
         cardsToOpen.push(getRandomCard());
     }
 
-    lootBox.classList.add('shaking');
+    if (!state.skipAnimation) {
+        lootBox.classList.add('shaking');
+    }
+    
     progressText.textContent = `Abriendo ${numCards} cartas...`;
     
+    // Tiempos base ajustados por velocidad
+    const revealDelay = state.skipAnimation ? 0 : 300 / state.speed;
+    const nextCardDelay = state.skipAnimation ? 0 : 500 / state.speed;
+
     for (let i = 0; i < numCards; i++) {
         const card = cardsToOpen[i];
         
-        // Animación de revelación
-        await new Promise(resolve => setTimeout(resolve, 300));
+        if (!state.skipAnimation) {
+            await new Promise(resolve => setTimeout(resolve, revealDelay));
+            showCard(card);
+        }
         
-        showCard(card);
         state.cardsRevealed++;
         if (card.id === 'legendary') state.hasLegendary = true;
         
-        // Actualizar barra de progreso
         const progress = ((i + 1) / numCards) * 100;
         progressBar.style.width = `${progress}%`;
         cardsEl.textContent = state.cardsRevealed;
         
         addToHistory(card);
         
-        await new Promise(resolve => setTimeout(resolve, 500));
+        if (!state.skipAnimation) {
+            await new Promise(resolve => setTimeout(resolve, nextCardDelay));
+        }
         
-        if (i === numCards - 1) {
+        if (i === numCards - 1 && !state.skipAnimation) {
             cardReveal.classList.remove('show');
         }
     }
     
     lootBox.classList.remove('shaking');
+    cardReveal.classList.remove('show'); // Asegurar cierre
     state.isOpening = false;
     progressBar.style.width = '0%';
-    progressText.textContent = "¡Mazo abierto!";
+    progressText.textContent = state.skipAnimation ? "¡Cartas añadidas!" : "¡Mazo abierto!";
     
     updateUI();
     checkGameOver();
@@ -112,10 +130,6 @@ async function openPackSequence(numPacks) {
 
 function showCard(card) {
     cardReveal.className = `card-reveal show ${card.id}`;
-    cardRarityText.textContent = card.name_rarity || card.name.toUpperCase(); // Fallback
-    cardRarityText.textContent = card.name.split(' ')[0] === card.name ? card.name : card.name; // Logic fix
-    
-    // Ajuste de textos según diseño
     cardRarityText.textContent = rarities.find(r => r.id === card.id).name;
     cardRarityText.style.backgroundColor = card.color;
     cardRarityText.style.color = card.id === 'common' ? '#1e293b' : 'white';
@@ -140,12 +154,12 @@ function checkGameOver() {
     if (state.hasLegendary) {
         showModal(
             "¡Objeto Legendario Encontrado!",
-            `Te tomó abrir ${state.cardsRevealed} cartas (${state.packsBought} mazos) para conseguirlo. Aunque lo lograste, nota que muchos otros jugadores gastarían sus 1000 fichas sin éxito. La probabilidad del 5% (ajustada por peso) no garantiza nada en pocos intentos.`
+            `Te tomó abrir ${state.cardsRevealed} cartas (${state.packsBought} mazos) para conseguirlo. Aunque lo lograste, nota que muchos otros jugadores gastarían sus 1000 fichas sin éxito. La probabilidad del 3.2% no garantiza nada en pocos intentos.`
         );
     } else if (state.chips < 10) {
         showModal(
             "¡Te has quedado sin fichas!",
-            `Has abierto ${state.cardsRevealed} cartas y NO conseguiste el Legendario. Esto demuestra el mito: comprar muchas cajas NO garantiza el premio. La probabilidad es independiente en cada tiro; no "se acumula" para forzar un resultado.`
+            `Has abierto ${state.cardsRevealed} cartas y NO conseguiste el Legendario. Esto demuestra el mito: comprar muchas cajas NO garantiza el premio. La probabilidad es independiente en cada tiro.`
         );
     }
 }
@@ -156,7 +170,43 @@ function showModal(title, message) {
     overlay.classList.remove('hidden');
 }
 
+function resetGame() {
+    state = {
+        chips: 1000,
+        packsBought: 0,
+        cardsRevealed: 0,
+        hasLegendary: false,
+        isOpening: false,
+        speed: state.speed, // Mantener preferencia
+        skipAnimation: state.skipAnimation // Mantener preferencia
+    };
+    historyGrid.innerHTML = '';
+    overlay.classList.add('hidden');
+    cardReveal.classList.remove('show');
+    progressBar.style.width = '0%';
+    progressText.textContent = "Esperando apertura...";
+    updateUI();
+}
+
 // Event Listeners
+btnSpeed.forEach(btn => {
+    btn.addEventListener('click', () => {
+        state.speed = parseInt(btn.dataset.speed);
+        btnSpeed.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    });
+});
+
+chkSkip.addEventListener('change', (e) => {
+    state.skipAnimation = e.target.checked;
+});
+
+btnResetMain.addEventListener('click', () => {
+    if (confirm('¿Estás seguro de que quieres reiniciar todo el progreso? Perderás tus cartas obtenidas y fichas gastadas.')) {
+        resetGame();
+    }
+});
+
 btnBuy1.addEventListener('click', () => {
     if (state.chips >= 10 && !state.isOpening) {
         state.chips -= 10;
@@ -173,19 +223,7 @@ btnBuy10.addEventListener('click', () => {
     }
 });
 
-btnRestart.addEventListener('click', () => {
-    state = {
-        chips: 1000,
-        packsBought: 0,
-        cardsRevealed: 0,
-        hasLegendary: false,
-        isOpening: false
-    };
-    historyGrid.innerHTML = '';
-    overlay.classList.add('hidden');
-    updateUI();
-    progressText.textContent = "Esperando apertura...";
-});
+btnRestart.addEventListener('click', resetGame);
 
 // Inicialización
 updateUI();
