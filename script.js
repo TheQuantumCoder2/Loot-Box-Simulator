@@ -101,7 +101,10 @@ async function openPackSequence(numPacks) {
         }
         
         state.cardsRevealed++;
-        if (card.id === 'legendary') state.hasLegendary = true;
+        if (card.id === 'legendary') {
+            state.hasLegendary = true;
+            triggerLegendaryEffect();
+        }
         
         const progress = ((i + 1) / numCards) * 100;
         progressBar.style.width = `${progress}%`;
