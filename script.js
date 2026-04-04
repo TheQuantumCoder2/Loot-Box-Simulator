@@ -173,6 +173,13 @@ function showModal(title, message) {
     overlay.classList.remove('hidden');
 }
 
+function triggerLegendaryEffect() {
+    document.body.classList.add('legendary-flash');
+    setTimeout(() => {
+        document.body.classList.remove('legendary-flash');
+    }, 500);
+}
+
 function resetGame() {
     state = {
         chips: 1000,
